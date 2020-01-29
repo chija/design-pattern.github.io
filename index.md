@@ -1,5 +1,5 @@
 ## 工厂方法
-'''
+```
 //:  interfaces/Factories.java
 package interfaces;
 
@@ -57,7 +57,7 @@ public class Factories {
 		serviceConsumer(new Implementation2Factory());
 	}
 }
-'''
+```
 由上述代码可知工厂方法将Service和Service实例化分离。为什么添加额外级别地间隔性呢？一个常见的原因是把类的实例化推迟到子类，让子类决定要实例化的类；另一个原因是想要创建框架。
 
 ## 推迟实例化
