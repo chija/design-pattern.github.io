@@ -1,37 +1,66 @@
-## Welcome to GitHub Pages
+## 工厂方法
+'''
+//:  interfaces/Factories.java
+package interfaces;
 
-You can use the [editor on GitHub](https://github.com/chija/design-pattern.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+class Print{
+	public static void print(Object o) {
+		System.out.println(o);
+	}
+}
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+interface Service{
+	void method1();
+	void method2();
+}
 
-### Markdown
+interface ServiceFactory{     
+	Service getService();
+}
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+class Implementation1 implements Service{
+	Implementation1(){}   //  Package access
+	public void method1() {Print.print("Implementation1::method1()");}
+	public void method2() {Print.print("Implementation1::method2()");}
+}
 
-```markdown
-Syntax highlighted code block
+class Implementation2 implements Service{
+	Implementation2(){}   //  Package access
+	public void method1() {Print.print("Implementation2::method1()");}
+	public void method2() {Print.print("Implementation2::method2()");}
+}
 
-# Header 1
-## Header 2
-### Header 3
+class Implementation1Factory implements ServiceFactory{
+	Implementation1Factory(){}  //  Package access
+	public Service getService() {
+		return new Implementation1();
+	}
+}
 
-- Bulleted
-- List
+class Implementation2Factory implements ServiceFactory{
+	Implementation2Factory(){}  //  Package access
+	public Service getService() {
+		return new Implementation2();
+	}
+}
 
-1. Numbered
-2. List
+public class Factories {
+	public static void serviceConsumer(ServiceFactory fact) {
+		Service s = fact.getService();
+		s.method1();
+		s.method2();
+	}
+	public static void main(String[] args) {
+		Print.print("implementation1");
+		serviceConsumer(new Implementation1Factory());
+		Print.print("implementation2");
+		serviceConsumer(new Implementation2Factory());
+	}
+}
+'''
+由上述代码可知工厂方法将Service和Service实例化分离。为什么添加额外级别地间隔性呢？一个常见的原因是把类的实例化推迟到子类，让子类决定要实例化的类；另一个原因是想要创建框架。
 
-**Bold** and _Italic_ and `Code` text
+## 推迟实例化
 
-[Link](url) and ![Image](src)
-```
+## 创建框架
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/chija/design-pattern.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
